@@ -17,6 +17,8 @@ ActiveRecord::Schema.define(version: 2020_03_05_014625) do
     t.string "provider"
     t.string "uid"
     t.string "image"
+    t.string "phone_number"
+    t.text "description"
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
     t.string "reset_password_token"
