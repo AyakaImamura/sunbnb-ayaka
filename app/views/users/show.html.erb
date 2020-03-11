@@ -1,0 +1,53 @@
+<div class="container">
+    <div class="row">
+        <div class="col-lg-3 col-md-5 col-sm-6 p-4">
+            <section>
+                <div class="card text-center">
+                    <%= image_tag avatar_url(current_user) %>
+                    <div class="card-body card-header h5">
+                        verification
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">
+                            facebook
+                            <span class="float-right">
+                                <% if current_user.provider? %>
+                                    <i class="fa fa-check-circle fa-lg correct_color"></i>
+                                <% else %>
+                                    <i class="fa fa-times-circle fa-lg wrong_color"></i>
+                                <% end %>
+                            </span>
+                        </li>
+                        <li class="list-group-item">
+                            phone number
+                            <span class="float-right">
+                                <% if current_user.phone_number? %>
+                                    <i class="fa fa-check-circle fa-lg correct_color"></i>
+                                <% else %>
+                                    <i class="fa fa-times-circle fa-lg wrong_color"></i>
+                                <% end %>
+                            </span>
+                        </li>
+                    </ul>
+                </div>
+            </section>
+        </div>
+        <div class="col-lg-9 col-md-7 col-sm-6 p-4">
+            <section>
+                <div class="card">
+                    <div class="card-header text-center card-header">
+                        <h3><%= current_user.name %></h3>
+                    </div>
+                    <div class="card-body">
+                        <h4>listing(0)</h4>
+                        <hr>
+                        <br>
+                        <h3>Reviews From Guests(0)</h3>
+                        <hr>
+                        <h3>Reviews From Hosts(0)</h3>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</div>
