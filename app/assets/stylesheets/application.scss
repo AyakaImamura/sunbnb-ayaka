@@ -47,3 +47,25 @@
 .correct_color{
   color: rgb(63, 173, 164);
 }
+
+/*room create layout*/
+
+select{
+  width: 100%;
+  border: 1px solid black;
+  border-radius: 2px;
+  padding: 10px;
+  appearance: none;
+  -moz-appearance: none;
+  -webkit-appearance: none;
+}
+
+.select:before {
+  content: '\25bc';
+  font-size:1.2em;
+  position: absolute;
+  color:black;
+  top:42px;
+  right:30px;
+  transform: scale(0.94,0.62);
+}

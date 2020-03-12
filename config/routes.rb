@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'rooms/new'
   root 'pages#home'
   devise_for :users, controllers: {
     registrations: 'users/registrations',
@@ -8,6 +9,7 @@ Rails.application.routes.draw do
   }
 
   resources :users, only: [:show]
+  resources :rooms
 
   # devise_for :users,controllersは、usersフォルダの中にcontrollersがたくさん入っている
   #'users/passwords'は、usersがフォルダの名前で、passwordsはコントローラの名前
