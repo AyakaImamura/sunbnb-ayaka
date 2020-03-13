@@ -7,6 +7,8 @@ class User < ApplicationRecord
   
   validates :name, presence: true
 
+  has_many :rooms
+
   def self.from_omniauth(auth)
     user = User.where(email: auth.info.email).first
     

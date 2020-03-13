@@ -1,0 +1,23 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-3">
+            <%= render "rooms/sidebar" %>
+        </div>
+        <div class="col-md-9">
+            <div class="card">
+                <div class="card-header">
+                    <h4>Price</h4>
+                </div>
+                <div class="card-body">
+                    
+                    <%= form_for @room do |f| %>    
+                        <%= f.label :price %><br>
+                        <%= f.number_field :price, placeholder:"100",class:"w-100 form-control" %><br>
+                        <%= f.submit "submit",class: "btn btn-info w-25 savabtn" %>
+                    <% end %>
+
+                </div>
+            </div><%#card end%>            
+        </div><%#col-9 end%>
+    </div>
+</div>
