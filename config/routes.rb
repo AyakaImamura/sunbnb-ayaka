@@ -9,7 +9,16 @@ Rails.application.routes.draw do
   }
 
   resources :users, only: [:show]
-  resources :rooms
+  resources :rooms do
+    member do
+      get 'listing'
+      get 'pricing'
+      get 'description'
+      get 'photo_upload'
+      get 'amenities'
+      get 'location'
+    end
+  end
 
   # devise_for :users,controllersは、usersフォルダの中にcontrollersがたくさん入っている
   #'users/passwords'は、usersがフォルダの名前で、passwordsはコントローラの名前

@@ -69,3 +69,13 @@ select{
   right:30px;
   transform: scale(0.94,0.62);
 }
+
+.sidebarlist{
+  color: rgb(17, 58, 58);
+  text-decoration: none;
+
+  &:hover{
+    color: rgb(46, 150, 150);
+    text-decoration: none;
+  }
+}

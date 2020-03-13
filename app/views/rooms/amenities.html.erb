@@ -1,0 +1,46 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-3">
+            <%= render "rooms/sidebar" %>
+        </div>
+        <div class="col-md-9">
+            <div class="card">
+                <div class="card-header">
+                    <h4>Amenities</h4>
+                </div>
+                <div class="card-body">
+                    
+                    <%= form_for @room do |f| %>
+                        <div class="row">
+                            <div class="col-4 mb-3">
+                                <%= f.check_box :has_tv %>
+                                <%= f.label :TV %>
+                            </div>
+                            <div class="col-4 mb-3">
+                                <%= f.check_box :has_kitchen %>
+                                <%= f.label :Kitchen %>
+                            </div>
+                            <div class="col-4 mb-3">
+                                <%= f.check_box :has_internet %>
+                                <%= f.label :Internet %>
+                            </div>
+                            <div class="col-4 mb-3">
+                                <%= f.check_box :has_heating %>
+                                <%= f.label :Heating %>
+                            </div>
+                            <div class="col-4 mb-3">
+                                <%= f.check_box :has_aircon %>
+                                <%= f.label :Air_conditioning %>
+                            </div>
+                        </div>
+                        <div class="mt-3">
+                            <%= f.submit "submit",class: "btn btn-info w-25 savabtn" %>
+                        </div>
+                    <% end %>
+
+
+                </div>
+            </div><%#card end%>            
+        </div><%#col-9 end%>
+    </div>
+</div>
