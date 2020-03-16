@@ -17,7 +17,9 @@
                             <%= f.submit "Add Photos", class:"btn btn-form btn-info" %>
                         <% end %>
                     <hr>
-                    <%= render "photos/photo_list" %>
+                    <div id="photos">
+                        <%= render "photos/photos_list" %>
+                    </div>
                 </div>
             </div><%#card end%>            
         </div><%#col-9 end%>
