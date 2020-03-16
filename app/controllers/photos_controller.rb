@@ -12,4 +12,22 @@ class PhotosController < ApplicationController
       redirect_back(fallback_location: request.referer, notice:"Saved...")
     end #redirect_back is back to the page where you did the action
   end
+
+
+  def destroy
+    @photo = Photo.find(params[:id])
+    room = @photo.room
+  
+    @photo.destroy
+    @photos = Photo.where(room_id: room.id)
+  
+    respond_to :js
+  end
+
+  # def destroy
+  #   @photo = Photo.find(params[:id])
+  #   @photo.destroy
+    
+  #   redirect_back(fallback_location: request.referer, notice: "Saved...")
+  # end
 end
