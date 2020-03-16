@@ -8,10 +8,15 @@
                 <div class="card-header">
                     <h4>Photo Upload</h4>
                 </div>
-                <div class="card-body">
-                        <%= link_to "Select Photos", "#",class:"btn btn-block w-25 mx-auto"%>
-                        <br>
-                        <%= link_to "Add Photos", "#",class:"btn btn-block w-25 mx-auto"%>
+                <div class="card-body text-center">
+                        <%= form_for @room, url: room_photos_path(@room), method: 'post', html: {multipart: true} do |f| %>
+                            <div class="mb-2">
+                                <%= file_field_tag "images[]", type: :file, multiple: true, class: "filef" %>
+                            </div>
+                            <%= f.submit "Add Photos", class:"btn btn-form btn-info" %>
+                        <% end %>
+                    <hr>
+                    <%= render "photos/photo_list" %>
                 </div>
             </div><%#card end%>            
         </div><%#col-9 end%>
