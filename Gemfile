@@ -69,3 +69,5 @@ gem 'omniauth-facebook'
 gem 'paperclip'
 
 gem 'jquery-ui-rails', '~> 5.0'
+
+gem 'aws-sdk'
