@@ -1,0 +1,30 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-3">
+            <%= render "rooms/indexsidebar" %>
+        </div>
+        <div class="col-md-9">
+            <div class="card">
+                <div class="card-header">
+                    <h4>Your Listing</h4>
+                </div>
+
+                <div class="card-body">
+                    <% @rooms.each do |room| %>
+                        <div class="row mb-3">
+                            <div class="col-2">
+                                <% if room.photos.any? %>
+                                    <%= image_tag room.photos.first.image.url,class:"w-100 h-75" %>
+                                <% else %>
+                                    <%= image_tag "default_camera.JPG",class:"w-75" %>
+                                <% end %>
+                            </div>
+                            <div class="col-7"><%= link_to room.name, listing_room_path(room) %></div>
+                            <div class="col-3"><%= link_to "Update", listing_room_path(room),class:"btn btn-success btn-block" %></div>
+                        </div>
+                    <% end %>
+                </div>
+            </div><%#card end%>            
+        </div><%#col-9 end%>
+    </div>
+</div>
