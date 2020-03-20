@@ -82,5 +82,20 @@ select{
 
 
 
-/*_photo_list.html.erb*/
+/*paginate*/
 
+.paginate{
+  nav {
+    display: inline-block;
+  }
+}
+
+.icons{
+  color: rgb(46, 150, 150);
+}
+
+/*show.html amenities*/
+
+.line_through{
+  text-decoration: line-through;
+}

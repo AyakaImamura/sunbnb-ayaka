@@ -1,0 +1,146 @@
+<div class="container">
+    <div class="row mb-4">
+        <div class="col-12">
+            <%= image_tag @room.photos.first.image.url, class:"w-100" %>
+            
+            <%# <%= image_tag room.photos.first.image.url, class:"w-100 h-75" %> 
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-8"><%# leftside%>
+            <div class="row">
+                <div class="col-8">
+                    <h2><%= @room.name %></h2>
+                    <h5><%= @room.address %></h5>
+                </div>
+                <div class="col-4 text-center"><%# set in application_helper.rb%>
+                    <%= image_tag avatar_url(@room.user),class:"rounded-circle mr-1 w-50" %>
+                    <br>
+                    <h5><%= @room.user.name %></h5><b class="caret"></b>
+                </div>
+            </div>
+            <hr>
+            <div class="row text-center">
+                <div class="col-3">
+                    <i class="fa fa-home fa-3x icons"></i>
+                    <h5><%= @room.room_type %></h5>
+                </div>
+                <div class="col-3">
+                    <i class="fa fa-user-alt fa-3x icons"></i>
+                    <h5><%= @room.guest_count %> guests</h5>
+                </div>
+                <div class="col-3">
+                    <i class="fa fa-bed fa-3x icons"></i>
+                    <h5><%= @room.bedrooms_count %> bedrooms</h5>
+                </div>
+                <div class="col-3">
+                    <i class="fa fa-bath fa-3x icons"></i>
+                    <h5><%= @room.bathrooms_count %> bathrooms</h5>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-8">
+                    <h4>About this listing</h4>
+                    <p><%= @room.summary %></p>
+                </div>
+                <div class="col-4">
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-4">
+                    <h4>Amenities</h4>
+                </div>
+                <div class="col-8">
+                    <div class="row">
+                        
+
+                        <div class="col-6">
+                            <div class="<%= 'line_through' unless @room.has_tv? %>">
+                            <h6>TV</h6>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="<%= 'line_through' unless @room.has_kitchen? %>">
+                            <h6>KITCHEN</h6>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="<%= 'line_through' unless @room.has_internet? %>">
+                            <h6>INTERNET</h6>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="<%= 'line_through' unless @room.has_heating? %>">
+                            <h6>HEATING</h6>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="<%= 'line_through' unless @room.has_aircon? %>">
+                            <h6>AIRCON</h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-12">
+                    <h4>Reviews</h4>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-12">
+                    <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                        <ol class="carousel-indicators">
+                                    <% @room.photos.each do |photo| %>
+                                    <li data-target="#carouselExampleIndicators" data-slide-to="<%= photo.id %>"></li>
+                                    <% end %>
+                        </ol>
+                        <div class="carousel-inner">
+                            <% @room.photos.each do |photo| %>
+                                <div class="carousel-item <%= 'active' if photo.id == @room.photos.first.id %>">
+                                    <%= image_tag photo.image.url, class:"d-block w-100" %>
+                                </div>
+                            <% end %>
+                        </div>
+
+                        <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="sr-only">Previous</span>
+                        </a>
+                        <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="sr-only">Next</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-12">
+                    <h4>GOOGLEMAP</h4>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-12">
+                    <h4>Nearby</h4>
+                </div>
+            </div>
+        </div>
+        <div class="col-4 border"><%# rightside%>
+            <div class="card">
+                <div class="card-header">
+                    <h4>＄<%= @room.price %><span class="float-right">pernight</span></h4>
+                </div>
+                <div class="card-body">
+                    Here is form for
+                </div>
+            </div><%#card end%>          
+        </div>
+    </div>
+</div>
+

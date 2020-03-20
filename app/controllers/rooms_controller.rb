@@ -2,7 +2,7 @@ class RoomsController < ApplicationController
   before_action :set_room, except:[:index, :new, :create]
 
   def index
-  	@rooms = current_user.rooms
+    @rooms = current_user.rooms.paginate(page: params[:page], per_page:6)
   end
 
   def new
@@ -16,6 +16,10 @@ class RoomsController < ApplicationController
     else
       render 'new'      
     end
+  end
+
+  def show
+    # @room = Room.find(params[:id])
   end
 
   def update
