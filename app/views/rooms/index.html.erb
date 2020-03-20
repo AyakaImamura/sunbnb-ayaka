@@ -19,10 +19,13 @@
                                     <%= image_tag "default_camera.JPG",class:"w-75" %>
                                 <% end %>
                             </div>
-                            <div class="col-7"><%= link_to room.name, listing_room_path(room) %></div>
+                            <div class="col-7"><%= link_to room.name, room_path(room) %></div>
                             <div class="col-3"><%= link_to "Update", listing_room_path(room),class:"btn btn-success btn-block" %></div>
                         </div>
                     <% end %>
+                    <div class="paginate text-center">
+                        <%= will_paginate %>
+                    </div>
                 </div>
             </div><%#card end%>            
         </div><%#col-9 end%>
