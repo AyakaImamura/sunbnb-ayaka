@@ -127,7 +127,7 @@
                     <script type="text/javascript" src="//maps.googleapis.com/maps/api/js?key=AIzaSyDX-8bXEe4mflCd9EroeN01DYOFqcQQPXY"></script>
                     <script>
                     function initialize() {
-                        var location = {lat: Number("<%= @room.latitude %>"), lng: Number("<%= @room.longtitude %>")};
+                        var location = {lat: Number("<%= @room.latitude %>"), lng: Number("<%= @room.longitude %>")};
                         var map = new google.maps.Map(document.getElementById('map'),{
                             center: location,
                             zoom: 5
@@ -152,7 +152,24 @@
             <hr>
             <div class="row">
                 <div class="col-12">
-                    <h4>Nearby</h4>
+                    <h4>Nearbys</h4>
+                    <div class="row pt-2 mb-5 pb-4">
+                        <% if @room.nearbys %>
+                            <% for room in @room.nearbys(10) %>
+                                <div class="col-md-4">
+                                    <div class="card">
+                                        <div class="card-header preview">
+                                            <%= image_tag room.photos.first.image.url, width:"220",height:"300",class:"mx-auto"  %>
+                                        </div>
+                                        <div class="card-body">
+                                            <%= link_to room.listing_name, room %> <br/>
+                                            (<%= room.distance.round(2) %> kms away)
+                                        </div>
+                                    </div>
+                                </div>
+                            <% end %>
+                        <% end %>
+                    </div>
                 </div>
             </div>
         </div>
