@@ -43,7 +43,7 @@ ActiveRecord::Schema.define(version: 2020_03_20_063438) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.float "latitude"
-    t.float "longtitude"
+    t.float "longitude"
   end
 
   create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
