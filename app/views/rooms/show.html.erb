@@ -54,8 +54,6 @@
                 </div>
                 <div class="col-8">
                     <div class="row">
-                        
-
                         <div class="col-6">
                             <div class="<%= 'line_through' unless @room.has_tv? %>">
                             <h6>TV</h6>
@@ -122,67 +120,194 @@
             <div class="row">
                 <div class="col-12">
                     <h4>GOOGLEMAP</h4>
-
                     <div id="map"></div>
                     <script type="text/javascript" src="//maps.googleapis.com/maps/api/js?key=AIzaSyDX-8bXEe4mflCd9EroeN01DYOFqcQQPXY"></script>
                     <script>
-                    function initialize() {
-                        var location = {lat: Number("<%= @room.latitude %>"), lng: Number("<%= @room.longitude %>")};
-                        var map = new google.maps.Map(document.getElementById('map'),{
-                            center: location,
-                            zoom: 5
-                        });
-                    
-                        var marker = new google.maps.Marker({
-                            position: location,
-                            map: map
-                        });
-                    
-                        var infoWindow = new google.maps.InfoWindow({
-                            content: '<div id="content"><%= image_tag @room.photos.first.image.url %></div>'
-                        });
-                    
-                        infoWindow.open(map, marker);
-                    }
-                    
-                    google.maps.event.addDomListener(window,'load', initialize);
+                        function initialize() {
+                            var location = {lat: Number("<%= @room.latitude %>"), lng: Number("<%= @room.longitude %>")};
+                            var map = new google.maps.Map(document.getElementById('map'),{
+                                center: location,
+                                zoom: 5
+                            });
+                        
+                            var marker = new google.maps.Marker({
+                                position: location,
+                                map: map
+                            });
+                        
+                            var infoWindow = new google.maps.InfoWindow({
+                                content: '<div id="content"><%= image_tag @room.photos.first.image.url %></div>'
+                            });
+                        
+                            infoWindow.open(map, marker);
+                        }
+                        
+                        google.maps.event.addDomListener(window,'load', initialize);
                     </script>
                 </div>
             </div>
             <hr>
-            <div class="row">
-                <div class="col-12">
-                    <h4>Nearbys</h4>
-                    <div class="row pt-2 mb-5 pb-4">
-                        <% if @room.nearbys %>
-                            <% for room in @room.nearbys(10) %>
-                                <div class="col-md-4">
-                                    <div class="card">
-                                        <div class="card-header preview">
-                                            <%= image_tag room.photos.first.image.url, width:"220",height:"300",class:"mx-auto"  %>
-                                        </div>
-                                        <div class="card-body">
-                                            <%= link_to room.name, room %> <br/>
-                                            (<%= room.distance.round(2) %> kms away)
-                                        </div>
+            <div class="container"> 
+                <h4>Nearbys</h4>
+                <div class="row pt-2 mb-5 pb-4">
+                    <% if @room.nearbys %>
+                        <% for room in @room.nearbys(10) %>
+                            <div class="col-md-4">
+                                <div class="card">
+                                    <div class="card-header preview">
+                                        <%= image_tag room.photos.first.image.url, width:"220",height:"300",class:"mx-auto"  %>
+                                    </div>
+                                    <div class="card-body">
+                                        <%= link_to room.name, room %> <br/>
+                                        (<%= room.distance.round(2) %> kms away)
                                     </div>
                                 </div>
-                            <% end %>
+                            </div>
                         <% end %>
-                    </div>
+                    <% end %>
                 </div>
             </div>
         </div>
-        <div class="col-4"><%# rightside%>
+
+        <div class="col-4"><%# --------------------------------rightside-------------------------------------- %>
             <div class="card">
                 <div class="card-header">
                     <h4>＄<%= @room.price %><span class="float-right">pernight</span></h4>
                 </div>
                 <div class="card-body">
-                    Here is form for
+                    <div class="row">
+                        <div class="col-12">
+                            <%= form_for :reservation, url:preload_room_path(@room) do |f|%>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <%= f.label :check_in %>
+                                        <%= f.text_field :start_date, readonly: true, placeholder: "Start Date", class: "form-control w-100" %>
+                                    </div>
+                                    <div class="col-6">
+                                        <%= f.label :check_out %>
+                                        <%= f.text_field :end_date, readonly: true, placeholder: "End Date", class: "form-control w-100", disabled: true %>
+                                        <%#=  id = preview%>
+                                        <script>
+                                            function checkDate(date) {
+                                                dmy = date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear();
+                                                return [$.inArray(dmy, unavailableDates) == -1];
+                                            }
+
+                                            $(function() {
+
+                                                unavailableDates = [];
+
+                                                $.ajax({
+                                                    url: '<%= preload_room_path(@room) %>',
+                                                    dataType: 'json',
+                                                    success: function(data) {
+
+                                                        $.each(data, function(arrID, arrValue) {
+                                                            for(var d = new Date(arrValue.start_date); d <= new Date(arrValue.end_date); d.setDate(d.getDate() + 1)) {
+                                                                unavailableDates.push($.datepicker.formatDate('d-m-yy', d));
+                                                            }
+                                                        })
+                                                        
+                                                        $('#start_date').datepicker({
+                                                            dateFormat: 'dd-mm-yy',
+                                                            minDate: 0,
+                                                            maxDate: '3m',
+                                                            beforeShowDay: checkDate,
+                                                            onSelect: function(selected) {
+                                                                $('#end_date').datepicker("option", "minDate", selected);
+                                                                $('#end_date').attr("disabled", false);
+                                                                //from here
+                                                                var start_date = $('#start_date').datepicker('getDate');
+                                                                var end_date = $('#end_date').datepicker('getDate');
+                                                                var nights = (end_date - start_date)/1000/60/60/24 + 1;
+
+                                                                var input = {
+                                                                    'start_date': start_date,
+                                                                    'end_date': end_date
+                                                                }
+
+                                                                $.ajax({
+                                                                    url: '<%= preview_room_path(@room) %>',
+                                                                    data: input,
+                                                                    success: function(data) {
+                                                                        if (data.conflict) {
+                                                                            $('#message').text("These dates are not available.");
+                                                                            $('#preview').hide();
+                                                                            $('#btn-book').attr('disabled', true);
+                                                                        } 
+                                                                        else {
+                                                                            $('#message').text("");
+                                                                            $('#preview').show();
+                                                                            $('#btn-book').attr('disabled', false);
+
+                                                                            var total = nights * <%= @room.price %>;
+                                                                            $('#reservation-nights').text(nights);
+                                                                            $('#reservation-total').text(total);
+                                                                        }
+                                                                    }
+                                                                });
+                                                                //to here
+                                                            }
+                                                        });
+
+                                                        $('#end_date').datepicker({
+                                                            dateFormat: 'dd-mm-yy',
+                                                            minDate: 0,
+                                                            maxDate: '3m',
+                                                            beforeShowDay: checkDate,
+                                                            onSelect: function(selected) {
+                                                                $('#start_date').datepicker("option", "maxDate", selected);
+                                                                //from here
+                                                                var start_date = $('#start_date').datepicker('getDate');
+                                                                var end_date = $('#end_date').datepicker('getDate');
+                                                                var nights = (end_date - start_date)/1000/60/60/24 + 1;
+
+                                                                var input = {
+                                                                    'start_date': start_date,
+                                                                    'end_date': end_date
+                                                                }
+
+                                                                $.ajax({
+                                                                    url: '<%= preview_room_path(@room) %>',
+                                                                    data: input,
+                                                                    success: function(data) {
+                                                                        if (data.conflict) {
+                                                                            $('#message').text("These dates are not available.");
+                                                                            $('#preview').hide();
+                                                                            $('#btn-book').attr('disabled', true);
+                                                                        } else {
+                                                                            $('#message').text("");
+                                                                            $('#preview').show();
+                                                                            $('#btn-book').attr('disabled', false);
+
+                                                                            var total = nights * <%= @room.price %>;
+                                                                            $('#reservation-nights').text(nights);
+                                                                            $('#reservation-total').text(total);
+                                                                        }
+                                                                    }
+                                                                });
+                                                                //to here
+                                                            }
+                                                        });
+                                                    }
+                                                });
+                                            });
+                                        </script>
+                                    </div>
+                                    <div class="col-12" id="preview" style="display: none;">
+                                        <div><%= @room.price %></div>
+                                        <div><p id="reservation-nights"></p></div>
+                                        <div><p id="reservation-total"> </p></div>
+                                    </div>
+                                    <div class="col-12">
+                                        <%= f.submit "Book Now", class: "form-control", id:"btn-book", disabled: true %>
+                                    </div>
+                                </div>
+                            <% end %>
+                        </div>
+                    </div>
                 </div>
             </div><%#card end%>          
         </div>
     </div>
 </div>
-

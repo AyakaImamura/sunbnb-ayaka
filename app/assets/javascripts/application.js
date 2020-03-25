@@ -14,6 +14,7 @@
 //= require jquery3
 //= require popper
 //= require bootstrap-sprockets
+//= require jquery-ui/datepicker
 //= require toastr
 //= require activestorage
 //= require turbolinks
