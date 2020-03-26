@@ -177,17 +177,28 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-12">
-                            <%= form_for :reservation, url:preload_room_path(@room) do |f|%>
+                            <%= form_for ([@room, @room.reservations.new]) do |f| %>
                                 <div class="row">
                                     <div class="col-6">
                                         <%= f.label :check_in %>
+                                        <h4><span id="message"></span></h4>
                                         <%= f.text_field :start_date, readonly: true, placeholder: "Start Date", class: "form-control w-100" %>
                                     </div>
                                     <div class="col-6">
                                         <%= f.label :check_out %>
+                                        <h4><span></span></h4><%#empty is OK. This is just for layout%>
                                         <%= f.text_field :end_date, readonly: true, placeholder: "End Date", class: "form-control w-100", disabled: true %>
-                                        <%#=  id = preview%>
-                                        <script>
+                                    </div>
+                                    <div class="col-12" id="preview" style="display: none;">
+                                        <hr>
+                                        <div>Price:<b class="float-right">$<%= @room.price %></b></div>
+                                        <hr>
+                                        <div>Number of Nights:<b class="float-right"><span id="reservation-nights"></span></b></div>
+                                        <hr>
+                                        <div>Total price:<b class="float-right">＄<span id="reservation-total"></span></b></div>
+                                        <hr> 
+                                    </div>
+                                    <script>
                                             function checkDate(date) {
                                                 dmy = date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear();
                                                 return [$.inArray(dmy, unavailableDates) == -1];
@@ -208,18 +219,18 @@
                                                             }
                                                         })
                                                         
-                                                        $('#start_date').datepicker({
+                                                        $('#reservation_start_date').datepicker({
                                                             dateFormat: 'dd-mm-yy',
                                                             minDate: 0,
                                                             maxDate: '3m',
                                                             beforeShowDay: checkDate,
                                                             onSelect: function(selected) {
-                                                                $('#end_date').datepicker("option", "minDate", selected);
-                                                                $('#end_date').attr("disabled", false);
+                                                                $('#reservation_end_date').datepicker("option", "minDate", selected);
+                                                                $('#reservation_end_date').attr("disabled", false);
                                                                 //from here
-                                                                var start_date = $('#start_date').datepicker('getDate');
-                                                                var end_date = $('#end_date').datepicker('getDate');
-                                                                var nights = (end_date - start_date)/1000/60/60/24 + 1;
+                                                                var start_date = $('#reservation_start_date').datepicker('getDate');
+                                                                var end_date = $('#reservation_end_date').datepicker('getDate');
+                                                                var nights = (end_date - start_date)/1000/60/60/24 ;
 
                                                                 var input = {
                                                                     'start_date': start_date,
@@ -250,17 +261,17 @@
                                                             }
                                                         });
 
-                                                        $('#end_date').datepicker({
+                                                        $('#reservation_end_date').datepicker({
                                                             dateFormat: 'dd-mm-yy',
                                                             minDate: 0,
                                                             maxDate: '3m',
                                                             beforeShowDay: checkDate,
                                                             onSelect: function(selected) {
-                                                                $('#start_date').datepicker("option", "maxDate", selected);
+                                                                $('#reservation_start_date').datepicker("option", "maxDate", selected);
                                                                 //from here
-                                                                var start_date = $('#start_date').datepicker('getDate');
-                                                                var end_date = $('#end_date').datepicker('getDate');
-                                                                var nights = (end_date - start_date)/1000/60/60/24 + 1;
+                                                                var start_date = $('#reservation_start_date').datepicker('getDate');
+                                                                var end_date = $('#reservation_end_date').datepicker('getDate');
+                                                                var nights = (end_date - start_date)/1000/60/60/24 ;
 
                                                                 var input = {
                                                                     'start_date': start_date,
@@ -293,15 +304,9 @@
                                                 });
                                             });
                                         </script>
-                                    </div>
-                                    <div class="col-12" id="preview" style="display: none;">
-                                        <div><%= @room.price %></div>
-                                        <div><p id="reservation-nights"></p></div>
-                                        <div><p id="reservation-total"> </p></div>
-                                    </div>
-                                    <div class="col-12">
-                                        <%= f.submit "Book Now", class: "form-control", id:"btn-book", disabled: true %>
-                                    </div>
+                                        <div class="col-12 mt-2">
+                                            <%= f.submit "Book Now", class: "form-control btn-info", id:"btn-book", disabled: true %>
+                                        </div>
                                 </div>
                             <% end %>
                         </div>
