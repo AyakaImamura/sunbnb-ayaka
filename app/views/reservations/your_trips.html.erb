@@ -1,0 +1,37 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-3">
+            <%= render "rooms/indexsidebar" %>
+        </div>
+        <div class="col-md-9">
+            <div class="card">
+                <div class="card-header">
+                    <h4>Your trips</h4>
+                </div>
+
+                <div class="card-body">
+                    <% @reservations.each do |reservation| %>
+                            <div class="row mb-3">
+                                <div class="col-2">
+                                    <%= reservation.start_date.strftime('%v') %>
+                                </div>
+                                <div class="col-2">
+                                    <% if reservation.room.photos.any? %>
+                                        <%= image_tag reservation.room.photos.first.image.url,class:"w-100 h-75" %>
+                                    <% else %>
+                                        <%= image_tag "default_camera.JPG",class:"w-75" %>
+                                    <% end %>
+                                </div>
+                                <div class="col-5">
+                                    <%= reservation.room.name %>
+                                    <%= image_tag avatar_url(reservation.room.user),class:"fbpic rounded-circle mr-1" %>
+                                    <%= reservation.room.user.name %>
+                                </div>
+                                <div class="col-3"><%= link_to "Review host", "#",class:"btn btn-block reviewbtn" %></div>
+                            </div>
+                    <% end %>
+                </div>
+            </div><%#card end%>            
+        </div><%#col-9 end%>
+    </div>
+</div>
