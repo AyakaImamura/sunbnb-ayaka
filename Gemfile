@@ -77,3 +77,7 @@ gem 'will_paginate', '~> 3.2', '>= 3.2.1'
 gem 'will_paginate-bootstrap4', '~> 0.2.2'
 
 gem 'geocoder', '~> 1.4'
+
+gem 'ransack', '~> 2.0'
+
+gem 'rails-jquery-autocomplete', github: 'lingceng/rails-jquery-autocomplete'

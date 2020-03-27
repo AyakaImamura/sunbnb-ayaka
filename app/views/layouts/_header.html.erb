@@ -24,9 +24,9 @@
                             </a> 
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                                     <li><%=link_to "Manage Listing", rooms_path, class:"dropdown-item" %></li>
-                                    <li><%=link_to "List Your Space", "#", class:"dropdown-item" %></li>
-                                    <li><%=link_to "Your Reservations", "#", class:"dropdown-item" %></li>
-                                    <li><%=link_to "Your trips", "#", class:"dropdown-item" %></li>
+                                    <li><%=link_to "List Your Space", rooms_path, class:"dropdown-item" %></li>
+                                    <li><%=link_to "Your Reservations", reservations_path, class:"dropdown-item" %></li>
+                                    <li><%=link_to "Your trips", trips_path, class:"dropdown-item" %></li>
                                     <li>
                                         <%=link_to "Edit Profile", edit_user_registration_path(current_user), class:"dropdown-item" %>
                                     </li>
