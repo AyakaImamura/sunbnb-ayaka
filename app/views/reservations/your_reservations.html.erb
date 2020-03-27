@@ -28,7 +28,7 @@
                                     <%= image_tag avatar_url(reservation.user),class:"fbpic rounded-circle mr-1" %>
                                     <%= reservation.user.name %>
                                 </div>
-                                <div class="col-3"><%= link_to "Review Guest", "#",class:"btn btn-block reviewbtn" %></div>
+                                <div class="col-3"><%= render partial: "reviews/host_form", locals: {reservation: reservation} %></div>
                             </div>
                         <% end %>
                     <% end %>

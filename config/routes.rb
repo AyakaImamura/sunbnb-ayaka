@@ -28,7 +28,11 @@ Rails.application.routes.draw do
   get "/reservations", to: "reservations#your_reservations"
   get "/trips", to:"reservations#your_trips"
 
+  resources :guest_reviews, only:[:create,:destroy]
+  resources :host_reviews, only:[:create,:destroy]
+
   # devise_for :users,controllersは、usersフォルダの中にcontrollersがたくさん入っている
   #'users/passwords'は、usersがフォルダの名前で、passwordsはコントローラの名前
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+
 end
